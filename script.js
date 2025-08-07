@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Private Island', price: 50_000_000, imageUrl: 'images/PrivateIsland.jpg' },
         { name: 'Luxury Yacht', price: 20_000_000, imageUrl: 'images/LuxuryYacht.webp' },
         { name: 'Supercar', price: 2_000_000, imageUrl: 'images/Supercar.webp' },
-        { name: 'Diamond Watch', price: 100_000, imageUrl: 'images/DimondWatch.webp' },
+        { name: 'Diamond Watch', price: 100_000, imageUrl: 'images/DiamondWatch.webp' },
         { name: 'Mansion', price: 100_000_000, imageUrl: 'images/Mansion.webp' },
         { name: 'Space Shuttle Ride', price: 250_000, imageUrl: 'images/SpaceShuttle.webp' },
         { name: 'McDonald\'s Franchise', price: 2_000_000, imageUrl: 'images/McDonald.webp' },
