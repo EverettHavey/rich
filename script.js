@@ -16,15 +16,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedItemName = '';
 
     const items = [
-        { name: 'Private Island', price: 50_000_000, imageUrl: 'https://via.placeholder.com/150/0000FF/FFFFFF?text=Private+Island' },
-        { name: 'Luxury Yacht', price: 20_000_000, imageUrl: 'https://via.placeholder.com/150/808080/FFFFFF?text=Luxury+Yacht' },
-        { name: 'Supercar', price: 2_000_000, imageUrl: 'https://via.placeholder.com/150/FF0000/FFFFFF?text=Supercar' },
-        { name: 'Diamond Watch', price: 100_000, imageUrl: 'https://via.placeholder.com/150/FFFF00/000000?text=Diamond+Watch' },
-        { name: 'Mansion', price: 100_000_000, imageUrl: 'https://via.placeholder.com/150/008000/FFFFFF?text=Mansion' },
-        { name: 'Space Shuttle Ride', price: 250_000, imageUrl: 'https://via.placeholder.com/150/000080/FFFFFF?text=Space+Shuttle' },
-        { name: 'McDonald\'s Franchise', price: 2_000_000, imageUrl: 'https://via.placeholder.com/150/FF0000/FFFFFF?text=McDonalds' },
-        { name: 'Starbucks Store', price: 500_000, imageUrl: 'https://via.placeholder.com/150/008000/FFFFFF?text=Starbucks' },
-        { name: 'Vending Machine', price: 3_000, imageUrl: 'https://via.placeholder.com/150/808080/FFFFFF?text=Vending+Machine' },
+        { name: 'Private Island', price: 50_000_000, imageUrl: 'images/PrivateIsland.jpg' },
+        { name: 'Luxury Yacht', price: 20_000_000, imageUrl: 'images/LuxuryYacht.webp' },
+        { name: 'Supercar', price: 2_000_000, imageUrl: 'images/Supercar.webp' },
+        { name: 'Diamond Watch', price: 100_000, imageUrl: 'images/DimondWatch.webp' },
+        { name: 'Mansion', price: 100_000_000, imageUrl: 'images/Mansion.webp' },
+        { name: 'Space Shuttle Ride', price: 250_000, imageUrl: 'images/SpaceShuttle.webp' },
+        { name: 'McDonald\'s Franchise', price: 2_000_000, imageUrl: 'images/McDonald.webp' },
+        { name: 'Starbucks Store', price: 500_000, imageUrl: 'images/Starbucks.webp' },
+        { name: 'Vending Machine', price: 3_000, imageUrl: 'images/VendingMachine.webp' },
 
 
     ];
