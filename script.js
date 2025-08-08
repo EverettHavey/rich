@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const itemsContainer = document.querySelector('.items');
     const receiptList = document.getElementById('receipt-list');
 
+    const startButton = document.getElementById('start-btn');
+    const timerDisplay = document.getElementById('timer');
+
     const modal = document.getElementById('buy-modal');
     const modalItemName = document.getElementById('modal-item-name');
     const modalItemPrice = document.getElementById('modal-item-price');
@@ -11,9 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const confirmBuyBtn = document.getElementById('confirm-buy-btn');
     const closeBtn = document.querySelector('.close-btn');
 
-    let money = 1_000_000_000_000;
+    let money = 100_000_000_000_000;
     let selectedItemPrice = 0;
     let selectedItemName = '';
+    let timer;
+    let timeLeft = 150; // 2 minutes 30 seconds in seconds
+    let gameStarted = false;
 
     const items = [
         { name: 'Private Island', price: 50_000_000, imageUrl: 'images/PrivateIsland.jpg' },
@@ -25,8 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'McDonald\'s Franchise', price: 2_000_000, imageUrl: 'images/McDonald.webp' },
         { name: 'Starbucks Store', price: 500_000, imageUrl: 'images/Starbucks.webp' },
         { name: 'Vending Machine', price: 3_000, imageUrl: 'images/VendingMachine.webp' },
-
-
     ];
 
     function formatMoney(amount) {
@@ -35,6 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateMoneyDisplay() {
         moneyDisplay.textContent = formatMoney(money);
+        if (money <= 0) {
+            endGame('win');
+        }
     }
 
     function renderItems() {
@@ -46,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <img src="${item.imageUrl}" alt="${item.name}">
                 <h3>${item.name}</h3>
                 <p>$${formatMoney(item.price)}</p>
-                <button class="buy-btn" data-price="${item.price}" data-name="${item.name}">Buy</button>
+                <button class="buy-btn" data-price="${item.price}" data-name="${item.name}" disabled>Buy</button>
             `;
             itemsContainer.appendChild(itemCard);
         });
@@ -56,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function openModal(name, price) {
         selectedItemName = name;
         selectedItemPrice = price;
-
         modalItemName.textContent = name;
         modalItemPrice.textContent = formatMoney(price);
         quantityInput.value = 1;
@@ -97,15 +103,52 @@ document.addEventListener('DOMContentLoaded', () => {
         receiptList.appendChild(listItem);
     }
 
+    function updateTimer() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }
+
+    function startTimer() {
+        timer = setInterval(() => {
+            timeLeft--;
+            updateTimer();
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                endGame('lose');
+            }
+        }, 1000);
+    }
+
+    function startGame() {
+        gameStarted = true;
+        startButton.style.display = 'none';
+        timerDisplay.style.display = 'block';
+        document.querySelectorAll('.buy-btn').forEach(btn => btn.disabled = false);
+        startTimer();
+    }
+
+    function endGame(result) {
+        clearInterval(timer);
+        if (result === 'win') {
+            window.location.href = 'win.html';
+        } else {
+            window.location.href = 'lose.html';
+        }
+    }
+
     function setupEventListeners() {
         document.querySelectorAll('.buy-btn').forEach(button => {
             button.addEventListener('click', (e) => {
-                const price = parseInt(e.target.dataset.price);
-                const name = e.target.dataset.name;
-                openModal(name, price);
+                if (gameStarted) {
+                    const price = parseInt(e.target.dataset.price);
+                    const name = e.target.dataset.name;
+                    openModal(name, price);
+                }
             });
         });
 
+        startButton.addEventListener('click', startGame);
         closeBtn.addEventListener('click', closeModal);
         window.addEventListener('click', (e) => {
             if (e.target === modal) {
@@ -118,4 +161,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateMoneyDisplay();
     renderItems();
+    updateTimer();
 });
