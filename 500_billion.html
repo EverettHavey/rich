@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timed Spending Challenge</title>
+    <style>
+        /* General body and container styling */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background-color: #161b22;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #58a6ff;
+        }
+
+        /* Money and Timer Displays */
+        .money-display, .timer-display {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+        }
+        
+        .timer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        #start-btn {
+            background-color: #238636;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        #start-btn:hover:not(:disabled) {
+            background-color: #2ea043;
+        }
+        #start-btn:disabled {
+            background-color: #4a5568;
+            cursor: not-allowed;
+        }
+
+        /* Items Grid */
+        .items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .item-card {
+            background-color: #21262d;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .item-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .item-card-content {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+
+        .item-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #58a6ff;
+        }
+
+        .item-card p {
+            font-size: 0.9rem;
+            color: #8b949e;
+            margin-bottom: 1rem;
+        }
+
+        .item-card .price {
+            font-weight: 700;
+            color: #c9d1d9;
+            margin-bottom: 1rem;
+        }
+
+        .buy-btn {
+            background-color: #30363d;
+            color: #c9d1d9;
+            border: 1px solid #30363d;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .buy-btn:hover {
+            background-color: #444c56;
+            border-color: #6e7681;
+        }
+
+        /* Receipt */
+        .receipt {
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .receipt h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #58a6ff;
+        }
+
+        #receipt-list {
+            list-style: none;
+            padding: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #30363d;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+
+        #receipt-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #30363d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #receipt-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #161b22;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            text-align: center;
+        }
+
+        .close-btn {
+            color: #8b949e;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .quantity-input label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .quantity-input input {
+            width: 80px;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid #30363d;
+            background-color: #0d1117;
+            color: white;
+            text-align: center;
+        }
+
+        .total-cost {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 1.5rem 0;
+        }
+
+        #confirm-buy-btn {
+            background-color: #238636;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        #confirm-buy-btn:hover {
+            background-color: #2ea043;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Spend $500,000,000,000</h1>
+        <p class="money-display">
+            Money: $<span id="money">500,000,000,000</span>
+        </p>
+        <div class="timer-container">
+            <button id="start-btn">Start Challenge</button>
+            <p id="timer" class="timer-display"></p>
+        </div>
+        <div class="items">
+        </div>
+        <div class="receipt">
+            <h2>Your Receipt</h2>
+            <ul id="receipt-list">
+            </ul>
+        </div>
+    </div>
+
+    <div id="buy-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 id="modal-item-name"></h2>
+            <p>Price per item: $<span id="modal-item-price"></span></p>
+            <div class="quantity-input">
+                <label for="quantity">How many would you like to buy?</label>
+                <input type="number" id="quantity" value="1" min="1">
+            </div>
+            <p class="total-cost">Total Cost: $<span id="total-cost"></span></p>
+            <button id="confirm-buy-btn">Buy Now</button>
+        </div>
+    </div>
+
+    <script>
+        // Game state and DOM elements
+        let money = 500000000000;
+        const totalTime = 150; // 60 seconds
+        let timeLeft = totalTime;
+        let timerInterval;
+        let isGameRunning = false;
+        let selectedItem = null;
+
+        const moneyElement = document.getElementById('money');
+        const timerElement = document.getElementById('timer');
+        const startBtn = document.getElementById('start-btn');
+        const itemsContainer = document.querySelector('.items');
+        const receiptList = document.getElementById('receipt-list');
+
+        const modal = document.getElementById('buy-modal');
+        const closeModalBtn = modal.querySelector('.close-btn');
+        const modalItemName = document.getElementById('modal-item-name');
+        const modalItemPrice = document.getElementById('modal-item-price');
+        const quantityInput = document.getElementById('quantity');
+        const totalCostElement = document.getElementById('total-cost');
+        const confirmBuyBtn = document.getElementById('confirm-buy-btn');
+
+        // Item data (updated with new list and placeholder images)
+        const items = [
+            { id: 1, name: 'Private Island', price: 50000000, imageUrl: 'images/PrivateIsland.jpg' },
+            { id: 2, name: 'Luxury Yacht', price: 20000000, imageUrl: 'images/LuxuryYacht.webp'},
+            { id: 3, name: 'Supercar', price: 2000000, imageUrl: 'images/Supercar.webp'},
+            { id: 4, name: 'Diamond Watch', price: 100000, imageUrl: 'images/DiamondWatch.webp'},
+            { id: 5, name: 'Mansion', price: 100000000, imageUrl: 'images/Mansion.webp'},
+            { id: 6, name: 'Space Shuttle Ride', price: 250000, imageUrl: 'images/SpaceShuttle.webp'},
+            { id: 7, name: 'McDonald\'s Franchise', price: 2000000, imageUrl: 'images/McDonald.webp'},
+            { id: 8, name: 'Starbucks Store', price: 500000, imageUrl: 'images/Starbucks.webp'},
+            { id: 9, name: 'Vending Machine', price: 3000, imageUrl: 'images/VendingMachine.webp'}
+        ];
+
+        // Utility function to format numbers with commas
+        const formatMoney = (amount) => {
+            return amount.toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 0 });
+        };
+
+        // Render item cards to the DOM
+        const renderItems = () => {
+            itemsContainer.innerHTML = '';
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    <img src="${item.imageUrl}" alt="${item.name}" class="rounded-t-lg">
+                    <div class="item-card-content">
+                        <h3>${item.name}</h3>
+                        <p>${item.description}</p>
+                        <p class="price">Price: $${formatMoney(item.price)}</p>
+                        <button class="buy-btn" data-id="${item.id}" ${!isGameRunning ? 'disabled' : ''}>Buy</button>
+                    </div>
+                `;
+                itemsContainer.appendChild(card);
+            });
+        };
+
+        // Event listener for item clicks (using event delegation)
+        itemsContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('buy-btn') && isGameRunning) {
+                const itemId = parseInt(e.target.dataset.id);
+                selectedItem = items.find(item => item.id === itemId);
+                if (selectedItem) {
+                    // Open the modal and populate it
+                    modalItemName.textContent = selectedItem.name;
+                    modalItemPrice.textContent = formatMoney(selectedItem.price);
+                    quantityInput.value = 1;
+                    totalCostElement.textContent = formatMoney(selectedItem.price);
+                    modal.style.display = 'flex';
+                }
+            }
+        });
+
+        // Event listener for quantity input in modal
+        quantityInput.addEventListener('input', () => {
+            const quantity = parseInt(quantityInput.value) || 1;
+            const totalCost = quantity * selectedItem.price;
+            totalCostElement.textContent = formatMoney(totalCost);
+        });
+
+        // Event listener for confirming purchase
+        confirmBuyBtn.addEventListener('click', () => {
+            const quantity = parseInt(quantityInput.value);
+            const totalCost = quantity * selectedItem.price;
+
+            if (totalCost > money) {
+                // Changed alert to a custom message in the modal
+                const message = "You don't have enough money for this purchase!";
+                modalItemName.textContent = message;
+                modalItemPrice.textContent = '';
+                quantityInput.style.display = 'none';
+                totalCostElement.textContent = '';
+                confirmBuyBtn.style.display = 'none';
+                return;
+            }
+
+            // Update game state and DOM
+            money -= totalCost;
+            moneyElement.textContent = formatMoney(money);
+
+            const receiptItem = document.createElement('li');
+            receiptItem.innerHTML = `
+                <span>${selectedItem.name} (x${quantity})</span>
+                <span>-$${formatMoney(totalCost)}</span>
+            `;
+            receiptList.appendChild(receiptItem);
+
+            modal.style.display = 'none';
+        });
+
+        // Modal close button
+        closeModalBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        // Start button logic
+        startBtn.addEventListener('click', () => {
+            isGameRunning = true;
+            startBtn.disabled = true;
+            renderItems(); // Re-render items to enable buy buttons
+
+            timerElement.textContent = `Time: ${totalTime}s`;
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = `Time: ${timeLeft}s`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    isGameRunning = false;
+                    renderItems(); // Re-render to disable buy buttons
+                    timerElement.textContent = "Time's up!";
+                    // Replaced alert with a custom message in the receipt area
+                    const finalMessage = document.createElement('li');
+                    finalMessage.style.textAlign = 'center';
+                    finalMessage.style.fontWeight = 'bold';
+                    finalMessage.textContent = `Challenge Over! You have $${formatMoney(money)} left.`;
+                    receiptList.appendChild(finalMessage);
+                    startBtn.disabled = false;
+                    timeLeft = totalTime;
+                }
+            }, 1000);
+        });
+
+        // Initial setup
+        const init = () => {
+            moneyElement.textContent = formatMoney(money);
+            timerElement.textContent = `Time: ${totalTime}s`;
+            renderItems();
+        };
+
+        window.onload = init;
+    </script>
+</body>
+</html>

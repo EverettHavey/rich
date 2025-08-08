@@ -3,42 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Timed Spending Challenge</title>
-    <link rel="stylesheet" href="style.css">
+    <title>How to Spend Your Fortune</title>
+    <!-- Use Tailwind CSS for a responsive, modern look -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Spend $100,000,000,000,000</h1>
-        <p class="money-display">
-            Money: $<span id="money">100,000,000,000,000</span>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
+
+    <!-- Main container for the content -->
+    <div class="bg-gray-800 p-8 md:p-12 rounded-2xl shadow-2xl max-w-4xl w-full">
+        <h1 class="text-4xl md:text-5xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
+            How to Spend Your Fortune
+        </h1>
+        <p class="text-center text-lg md:text-xl text-gray-300 mb-10">
+            Select an amount to see how you could spend it.
         </p>
-        <div class="timer-container">
-            <button id="start-btn">Start Challenge</button>
-            <p id="timer" class="timer-display"></p>
-        </div>
-        <div class="items">
-            </div>
-        <div class="receipt">
-            <h2>Your Receipt</h2>
-            <ul id="receipt-list">
-                </ul>
+
+        <!-- Grid for the spending options -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Option for $100 Trillion -->
+            <a href="trillion.html" class="p-6 bg-gray-700 rounded-xl shadow-lg hover:shadow-xl hover:bg-gray-600 transition-all duration-300 transform hover:scale-105 flex flex-col justify-between">
+                <span class="text-2xl font-bold">100 Trillion</span>
+                <span class="text-sm text-gray-400 mt-2">$100,000,000,000,000</span>
+            </a>
+
+            <!-- Option for $500 Billion -->
+            <a href="500_billion.html" class="p-6 bg-gray-700 rounded-xl shadow-lg hover:shadow-xl hover:bg-gray-600 transition-all duration-300 transform hover:scale-105 flex flex-col justify-between">
+                <span class="text-2xl font-bold">500 Billion</span>
+                <span class="text-sm text-gray-400 mt-2">$500,000,000,000</span>
+            </a>
+
+            <!-- Option for $100 Billion -->
+            <a href="100_billion.html" class="p-6 bg-gray-700 rounded-xl shadow-lg hover:shadow-xl hover:bg-gray-600 transition-all duration-300 transform hover:scale-105 flex flex-col justify-between">
+                <span class="text-2xl font-bold">100 Billion</span>
+                <span class="text-sm text-gray-400 mt-2">$100,000,000,000</span>
+            </a>
+
+            <!-- Option for $900 Million -->
+            <a href="900_million.html" class="p-6 bg-gray-700 rounded-xl shadow-lg hover:shadow-xl hover:bg-gray-600 transition-all duration-300 transform hover:scale-105 flex flex-col justify-between">
+                <span class="text-2xl font-bold">900 Million</span>
+                <span class="text-sm text-gray-400 mt-2">$900,000,000</span>
+            </a>
+
+            <!-- Option for $475 Million -->
+            <a href="475_million.html" class="p-6 bg-gray-700 rounded-xl shadow-lg hover:shadow-xl hover:bg-gray-600 transition-all duration-300 transform hover:scale-105 flex flex-col justify-between">
+                <span class="text-2xl font-bold">475 Million</span>
+                <span class="text-sm text-gray-400 mt-2">$475,000,000</span>
+            </a>
+
+            <!-- Option for $100 Million -->
+            <a href="100_million.html" class="p-6 bg-gray-700 rounded-xl shadow-lg hover:shadow-xl hover:bg-gray-600 transition-all duration-300 transform hover:scale-105 flex flex-col justify-between">
+                <span class="text-2xl font-bold">100 Million</span>
+                <span class="text-sm text-gray-400 mt-2">$100,000,000</span>
+            </a>
+            
+            <!-- Option for $50 Million -->
+            <a href="50_million.html" class="p-6 bg-gray-700 rounded-xl shadow-lg hover:shadow-xl hover:bg-gray-600 transition-all duration-300 transform hover:scale-105 flex flex-col justify-between">
+                <span class="text-2xl font-bold">50 Million</span>
+                <span class="text-sm text-gray-400 mt-2">$50,000,000</span>
+            </a>
+            
+            <!-- Option for $1 Million -->
+            <a href="1_million.html" class="p-6 bg-gray-700 rounded-xl shadow-lg hover:shadow-xl hover:bg-gray-600 transition-all duration-300 transform hover:scale-105 flex flex-col justify-between">
+                <span class="text-2xl font-bold">1 Million</span>
+                <span class="text-sm text-gray-400 mt-2">$1,000,000</span>
+            </a>
+
+            <!-- Option for $500,000 -->
+            <a href="500_thousand.html" class="p-6 bg-gray-700 rounded-xl shadow-lg hover:shadow-xl hover:bg-gray-600 transition-all duration-300 transform hover:scale-105 flex flex-col justify-between">
+                <span class="text-2xl font-bold">500 Thousand</span>
+                <span class="text-sm text-gray-400 mt-2">$500,000</span>
+            </a>
+
         </div>
     </div>
-
-    <div id="buy-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2 id="modal-item-name"></h2>
-            <p>Price per item: $<span id="modal-item-price"></span></p>
-            <div class="quantity-input">
-                <label for="quantity">How many would you like to buy?</label>
-                <input type="number" id="quantity" value="1" min="1">
-            </div>
-            <p class="total-cost">Total Cost: $<span id="total-cost"></span></p>
-            <button id="confirm-buy-btn">Buy Now</button>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
