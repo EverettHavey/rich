@@ -1,0 +1,239 @@
+/* General body and container styling */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0d1117;
+    color: #c9d1d9;
+    margin: 0;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    background-color: #161b22;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #58a6ff;
+}
+
+/* Money and Timer Displays */
+.money-display, .timer-display {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+}
+
+.timer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+#start-btn {
+    background-color: #238636;
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+#start-btn:hover:not(:disabled) {
+    background-color: #2ea043;
+}
+#start-btn:disabled {
+    background-color: #4a5568;
+    cursor: not-allowed;
+}
+
+/* Items Grid */
+.items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+    text-align: left;
+}
+
+.item-card {
+    background-color: #21262d;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.item-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-bottom: 1px solid #30363d;
+}
+
+.item-card-content {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.item-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #58a6ff;
+}
+
+.item-card p {
+    font-size: 0.9rem;
+    color: #8b949e;
+    margin-bottom: 1rem;
+}
+
+.item-card .price {
+    font-weight: 700;
+    color: #c9d1d9;
+    margin-bottom: 1rem;
+}
+
+.buy-btn {
+    background-color: #30363d;
+    color: #c9d1d9;
+    border: 1px solid #30363d;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.buy-btn:hover {
+    background-color: #444c56;
+    border-color: #6e7681;
+}
+
+/* Receipt */
+.receipt {
+    margin-top: 2rem;
+    text-align: left;
+}
+
+.receipt h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #58a6ff;
+}
+
+#receipt-list {
+    list-style: none;
+    padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #30363d;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+#receipt-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #30363d;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#receipt-list li:last-child {
+    border-bottom: none;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #161b22;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    text-align: center;
+}
+
+.close-btn {
+    color: #8b949e;
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 2rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.quantity-input label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.quantity-input input {
+    width: 80px;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #30363d;
+    background-color: #0d1117;
+    color: white;
+    text-align: center;
+}
+
+.total-cost {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 1.5rem 0;
+}
+
+#confirm-buy-btn {
+    background-color: #238636;
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+#confirm-buy-btn:hover {
+    background-color: #2ea043;
+}
